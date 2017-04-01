@@ -1,0 +1,68 @@
+
+.titulo-usuario {
+
+  margin-left: 23%;
+  color: white;
+
+}
+.titulo-prestamo {
+  margin-left: 17%;
+
+}
+
+.titulo-cliente {
+  margin:0 auto;
+}
+.sidebar-mini-hide{
+  color: white;
+}
+.content-tabla{
+  border-radius: 9px;
+}
+
+.botones{
+  text-align: center;
+  margin-left:9px;
+}
+
+.td {
+  width: 28%;
+}
+
+.modal-global {
+  border-radius: 5px;
+}
+.bg-gray-lighter {
+  background: linear-gradient(to bottom, rgba(85,125,219,1) 0%, rgba(66,98,171,1) 100%);
+}
+#main-container {
+  background:  rgba(66,98,171,1);
+}
+
+#header-navbar{
+  background: #2c343f;
+}
+
+.group-ip {
+  background: #fff;
+}
+
+#registroUsuario {
+  font-size: 15px;
+  font-weight:bold;
+}
+
+.panel-primary > .panel-heading{
+  background: white;
+}
+.titilo-modal-usuario {
+  margin: 0;
+  line-height: 1.42857143;
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "Source Sans Pro", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #646464;
+
+}
