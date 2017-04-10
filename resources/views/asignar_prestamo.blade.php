@@ -46,10 +46,16 @@
             </div>
             <div class="modal-body">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="form-group">
                     {!!Form::label('Nombre')!!}
                     {!!Form::input('text','nombres',null,['class'=>'form-control','id'=>'nombres'])!!}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                    {!!Form::label('Tipo prestamo')!!}
+                    {!!Form::select('tipo_prestamo',[''=>'Seleccione','1'=>'Cerrado','2'=>'Abierto'],null,['class'=>'form-control','id'=>'tipo_prestamo','onchange'=>'prestamos.tipo_prestamo(this)'])!!}
                   </div>
                 </div>
               </div>
@@ -87,29 +93,35 @@
               <div class="row">
                 <div class="col-md-6" >
                   <div class="form-group">
-                    {!!Form::label('Valor  intereses')!!}
+                    {!!Form::label('Valor total  intereses')!!}
                     {!!Form::number('valor-interes',null,['class'=>'form-control', 'id'=>'valor-interes'])!!}
                   </div>
                 </div>
-                <div class="col-md-6">
+               <div class="col-md-6">
+                 <div class="form-group">
+                   <label>Interes Mensual</label>
+                   <input type="text" class="form-control" name="interes_mensual" id="interes_mensual">
+                 </div>
+               </div>
+                </div>
+                <div class="row">
+                   <div class="col-md-6">
                   <div class="form-group">
                     {!!Form::label('Valor a pagar')!!}
                     {!!Form::number('valor-pagar',null,['class'=>'form-control', 'id'=>'valor-pagar'])!!}
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12" >
-                  <div class="form-group">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
                     {!!Form::label('Fecha')!!}
                     <div class="input-group date" id="sandbox-container">
                       <input type="text" name="fecha_prestamo" data-date-format='yy-mm-dd' class="form-control" id="fecha_prestamo"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
               {!! Form::close() !!}
-            </div>
             <div id="area-example"></div>
             <div class="modal-footer">
               {!!Form::button('Registrar',['class'=>'btn btn-primary','onclick'=>'prestamos.crear_prestamo();'])!!}

@@ -452,6 +452,7 @@ var cliente = {
       }
     });
   },
+
   cambiar_estado:function (id,estado) {
     $.ajaxSetup({
       headers: {
@@ -486,6 +487,7 @@ var cliente = {
 };
 
 var prestamos = {
+
   tabla_prestamos_clientes:function () {
     $(function() {
       tabla = $('#users-table').DataTable({
@@ -549,20 +551,37 @@ var prestamos = {
 
   calcular:function () {
 
-    $('interes').empty();
-    plazo = $('#plazo').val();
-    valor =  parseFloat($('#valor').val());
-    tasa_interes = parseFloat($('#interes option:selected').text());
-    valor_interes = ((valor) * (tasa_interes)/100);
-    total_intereses = ((valor_interes) * (plazo));
-    valor_pagar = ((total_intereses) + (valor));
-    $('#valor-interes').val(total_intereses);
-    $('#valor-pagar').val(valor_pagar);
-    $('interes').empty();
+    if ($("#tipo_prestamo").val() == 2) {
+       $('interes').empty();
+      plazo = $('#plazo').val();
+      valor =  parseFloat($('#valor').val());
+      tasa_interes = parseFloat($('#interes option:selected').text());
+      valor_interes = ((valor) * (tasa_interes)/100);
+      total_intereses = ((valor_interes) * (plazo));
+      $('#valor-interes').val(total_intereses);
+      $("#interes_mensual").val((valor*tasa_interes)/100);
+      $('interes').empty();
+    }
+    else {
+      $('interes').empty();
+      plazo = $('#plazo').val();
+      valor =  parseFloat($('#valor').val());
+      tasa_interes = parseFloat($('#interes option:selected').text());
+      valor_interes = ((valor) * (tasa_interes)/100);
+      total_intereses = ((valor_interes) * (plazo));
+      valor_pagar = ((total_intereses) + (valor));
+      $('#valor-interes').val(total_intereses);
+      $('#valor-pagar').val(valor_pagar);
+      $("#interes_mensual").val((valor*tasa_interes)/100);
+      $('interes').empty();
+    }
+
+
 
   },
 
   crear_prestamo:function () {
+
     var datos = {
       cliente_id: cliente_id,
       valor: parseFloat($('#valor').val()),
@@ -570,7 +589,9 @@ var prestamos = {
       palzo: $('#plazo').val(),
       total_intereses: total_intereses,
       valor_pagar: valor_pagar,
-      tasa_interes_id: $('#interes').val()
+      tasa_interes_id: $('#interes').val(),
+      interes_mensual: parseFloat($("#interes_mensual").val()),
+      tipo_prestamo: $("#tipo_prestamo").val()
     };
     console.log(datos);
     $.ajaxSetup({
@@ -587,6 +608,38 @@ var prestamos = {
     })
     .done(function(respuesta) {
       console.log(respuesta);
+      if (respuesta.respuesta == 1) {
+        new PNotify({
+          title: 'Registro prestamo',
+          text: 'Prestamo registrado con exito',
+          type: 'success'
+        });
+        $('#modal-prestamos-crear').modal("toggle");
+        $('#valor').val("");
+        $('#fecha_prestamo').val("");
+        $('#plazo').val("");
+        $('#interes').val("");
+        $("#interes_mensual").val("");
+        $("#tipo_prestamo").val("");
+        $("#valor-pagar").val("");
+        $("#valor-interes").val("");
+        $("#nombres").val("");
+        $("#documento").val("");
+      }
     });
+  },
+
+  tipo_prestamo:function(e){
+   
+       if($(e).val() == 2){
+        $('#plazo').attr('readonly', 'true');
+        $("#valor-interes").attr('readonly', 'true');
+        $('#valor-pagar').attr('readonly', 'true');
+
+       }else {
+         $('#plazo').removeAttr('readonly');
+           $('#valor-pagar').removeAttr('readonly');
+         $("#valor-interes").removeAttr('readonly');
+       }
   }
 }

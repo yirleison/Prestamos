@@ -33,10 +33,10 @@
   border-radius: 5px;
 }
 .bg-gray-lighter {
-  background: linear-gradient(to bottom, rgba(85,125,219,1) 0%, rgba(66,98,171,1) 100%);
+  background: linear-gradient(to bottom, rgba(229, 238, 255) 0%, rgba(229, 238, 255) 100%);
 }
 #main-container {
-  background:  rgba(66,98,171,1);
+  background:  rgba(229, 238, 255);
 }
 
 #header-navbar{
@@ -50,6 +50,10 @@
 #registroUsuario {
   font-size: 15px;
   font-weight:bold;
+}
+.pagination li{
+  color: white;
+  background: blue;
 }
 
 .panel-primary > .panel-heading{

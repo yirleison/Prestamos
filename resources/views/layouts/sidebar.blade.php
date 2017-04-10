@@ -278,6 +278,14 @@
               <a href="#" class="nav-submenu" data-toggle="nav-submenu"><i class="fa fa-money" aria-hidden="true"></i><span class="sidebar-mini-hide"> Gestionar Prestamos</span></a>
               <ul>
                 <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Asignar Prestamos</span></a></li>
+                <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Consultar Prestamos</span></a></li>
+              </ul>
+            </li>
+              <li>
+              <a href="#" class="nav-submenu" data-toggle="nav-submenu"><i class="fa fa-money" aria-hidden="true"></i><span class="sidebar-mini-hide">Abonos</span></a>
+              <ul>
+                <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Registrar Abono</span></a></li>
+                <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Consultar Abono</span></a></li>
               </ul>
             </li>
             <li class="nav-main-heading"><span class="sidebar-mini-hide">User Interface</span></li>

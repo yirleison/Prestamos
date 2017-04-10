@@ -55,6 +55,26 @@ class prestamosController extends Controller
 
   public function crear_prestamo(Request $request) {
 
+if ($request->input('tipo_prestamo') == 2) {
+
+  $prestamo = Prestamo::create([
+      'valor_prestamo' => $request->input('valor'),
+      'fecha_prestamo' => $request->input('fecha_prestamo'),
+      'plazo' => $request->input('palzo'),
+      'fecha_fin',
+      'total_intereses',
+      'valor_pagar',
+      'estado',
+      'clientes_id' => $request->input('cliente_id'),
+      'tasa_interes_id' => $request->input('tasa_interes_id'),
+      'tipo_prestamo' => $request->input('tipo_prestamo'),
+      'valor_interes_mensual' => $request->input('interes_mensual'),
+    ]);
+  
+   return json_encode(["respuesta"=>1]);
+}
+elseif ($request->input('tipo_prestamo') == 1) {
+  
     $prestamo = Prestamo::create([
       'valor_prestamo' => $request->input('valor'),
       'fecha_prestamo' => $request->input('fecha_prestamo'),
@@ -62,12 +82,15 @@ class prestamosController extends Controller
       'fecha_fin',
       'total_intereses' => $request->input('total_intereses'),
       'valor_pagar' => $request->input('valor_pagar'),
+      'estado',
       'clientes_id' => $request->input('cliente_id'),
       'tasa_interes_id' => $request->input('tasa_interes_id'),
+      'tipo_prestamo' => $request->input('tipo_prestamo'),
+      'valor_interes_mensual' => $request->input('interes_mensual'),
     ]);
 
-    return json_encode(["respuesta"=>1]);
-    // $prestamos = new sp_prestamos();
-    // $respuesta =  $prestamo->crear_prestamos($prestamo);
+     return json_encode(["respuesta"=>1]);
+}
+    
   }
 }
