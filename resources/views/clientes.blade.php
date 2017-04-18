@@ -122,15 +122,6 @@
 
   <!-- END Dynamic Table Simple -->
 
-
-
-
-
-
-
-
-
-
   {{-- modal para actualizar --}}
   <div class="row">
     <div class="col-md-12 col-sm-12 col-lg-12">

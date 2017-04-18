@@ -68,5 +68,25 @@
   font-weight: 600;
   line-height: 1.2;
   color: #646464;
+}
 
+/*Estilos para la tabla de la vista consultar prestamos*/
+
+.tabla-prestamos thead > tr > th {
+  color: #fff;
+background-color: #5c90d2;
+border-bottom-color: #5c90d2
+}
+
+#tbl-prestamo-abierto {
+  display: none;
+}
+.modal-global {
+    border-radius: 5px;
+    width: 100%;
+    padding: 0;
+}
+
+.modal-global h4 {
+  color:white;
 }

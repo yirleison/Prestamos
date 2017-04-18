@@ -4,7 +4,9 @@ var tabla = null;
 var id_cliente_editar,
 cuenta_id,
 id_usuario,
-cliente_id;
+cliente_id,
+estado,
+table;
 var valor = 0 ,tasa_interes,valor_interes = 0,total_intereses = 0,valor_pagar = 0,plazo;
 
 //MEDIA QUERIES
@@ -22,11 +24,11 @@ var usuarios = {
         serverSide: true,
         ajax: '/usuarios/tabla/usuarios',
         columns: [
-          { data: 'nombre', name: 'nombre' },
-          { data: 'email', name: 'email' },
-          { data: 'rol', name: 'rol' },
-          { data: 'estado', name: 'estado' },
-          {data: 'action', name: 'action',class:'td', orderable: false, searchable: false}
+        { data: 'nombre', name: 'nombre' },
+        { data: 'email', name: 'email' },
+        { data: 'rol', name: 'rol' },
+        { data: 'estado', name: 'estado' },
+        {data: 'action', name: 'action',class:'td', orderable: false, searchable: false}
         ],
         'language': traduccion
       });
@@ -249,12 +251,12 @@ var cliente = {
         serverSide: true,
         ajax: '/clientes/tabla/clientes',
         columns: [
-          { data: 'nombre', name: 'nombre' },
-          { data: 'primer_apellido', name: 'primer_apellido' },
-          { data: 'documento', name: 'documento' },
-          { data: 'celular', name: 'celular' },
-          { data: 'estado', name: 'estado' },
-          {data: 'action', name: 'action', orderable: false, searchable: false}
+        { data: 'nombre', name: 'nombre' },
+        { data: 'primer_apellido', name: 'primer_apellido' },
+        { data: 'documento', name: 'documento' },
+        { data: 'celular', name: 'celular' },
+        { data: 'estado', name: 'estado' },
+        {data: 'action', name: 'action', orderable: false, searchable: false}
         ],
         'language': traduccion
       });
@@ -495,12 +497,12 @@ var prestamos = {
         serverSide: true,
         ajax: '/prestamos/tabla/clientes',
         columns: [
-          { data: 'documento', name: 'documento' },
-          { data: 'nombre', name: 'nombre' },
-          { data: 'primer_apellido', name: 'primer_apellido' },
-          { data: 'celular', name: 'celular' },
-          { data: 'estado', name: 'estado' },
-          {data: 'action', name: 'action',class:'td', orderable: false, searchable: false}
+        { data: 'documento', name: 'documento' },
+        { data: 'nombre', name: 'nombre' },
+        { data: 'primer_apellido', name: 'primer_apellido' },
+        { data: 'celular', name: 'celular' },
+        { data: 'estado', name: 'estado' },
+        {data: 'action', name: 'action',class:'td', orderable: false, searchable: false}
         ],
         'language': traduccion
       });
@@ -540,10 +542,12 @@ var prestamos = {
       data: {id: id}
     })
     .done(function(datos) {
-      console.log(datos);
+
       $('#nombres').val(datos.nombre +' '+ datos.primer_apellido);
       $('#documento').val(datos.documento);
       cliente_id = id;
+      $('#nombres').attr('readonly', 'true');
+      $('#documento').attr('readonly', 'true');
 
       $('#modal-prestamos-crear').modal();
     });
@@ -552,13 +556,10 @@ var prestamos = {
   calcular:function () {
 
     if ($("#tipo_prestamo").val() == 2) {
-       $('interes').empty();
+      $('interes').empty();
       plazo = $('#plazo').val();
       valor =  parseFloat($('#valor').val());
       tasa_interes = parseFloat($('#interes option:selected').text());
-      valor_interes = ((valor) * (tasa_interes)/100);
-      total_intereses = ((valor_interes) * (plazo));
-      $('#valor-interes').val(total_intereses);
       $("#interes_mensual").val((valor*tasa_interes)/100);
       $('interes').empty();
     }
@@ -576,8 +577,6 @@ var prestamos = {
       $('interes').empty();
     }
 
-
-
   },
 
   crear_prestamo:function () {
@@ -586,14 +585,11 @@ var prestamos = {
       cliente_id: cliente_id,
       valor: parseFloat($('#valor').val()),
       fecha_prestamo: $('#fecha_prestamo').val(),
-      palzo: $('#plazo').val(),
-      total_intereses: total_intereses,
-      valor_pagar: valor_pagar,
       tasa_interes_id: $('#interes').val(),
       interes_mensual: parseFloat($("#interes_mensual").val()),
-      tipo_prestamo: $("#tipo_prestamo").val()
     };
     console.log(datos);
+
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -616,30 +612,150 @@ var prestamos = {
         });
         $('#modal-prestamos-crear').modal("toggle");
         $('#valor').val("");
-        $('#fecha_prestamo').val("");
-        $('#plazo').val("");
+        $('#fecha_prestamo').val(""); 
         $('#interes').val("");
         $("#interes_mensual").val("");
-        $("#tipo_prestamo").val("");
-        $("#valor-pagar").val("");
-        $("#valor-interes").val("");
         $("#nombres").val("");
         $("#documento").val("");
       }
     });
   },
 
-  tipo_prestamo:function(e){
-   
-       if($(e).val() == 2){
-        $('#plazo').attr('readonly', 'true');
-        $("#valor-interes").attr('readonly', 'true');
-        $('#valor-pagar').attr('readonly', 'true');
+  consultar_prestamo:function(){
 
-       }else {
-         $('#plazo').removeAttr('readonly');
-           $('#valor-pagar').removeAttr('readonly');
-         $("#valor-interes").removeAttr('readonly');
-       }
-  }
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      url: '/consultar/prestamo',
+      type: 'post',
+      dataType: 'json',
+      data:{id:$("#prestamo").val()}
+    })
+    .done(function(datos) {
+      console.log(datos);
+      var  tipo ="";
+      var esta = "";
+      var tasa = null;
+      $.each(datos,function(i, e) {
+        $("#tbody").empty();
+        $.each(datos[i],function(a, el) {
+
+          if(el.tipo_prestamo == 1){
+            tipo = "cerrado";
+          }else {
+            tipo = "Abierto";
+          }
+          if (el.estado == 1) {
+            esta = "activo";
+          }
+          $("#tbody").append("<tr><td>"+el.documento+"</td><td>"+el.nombre +' '+el.primer_apellido+"</td><td>"+el.fecha_prestamo+"</td><td>"+el.valor_prestamo+"</td><td>"+el.interes +" %"+"</td><td>"+el.valor_interes_mensual+"</td><td>"+esta+"</td><td><button class=' btn btn-primary fa fa-pencil-square-o' title='Editar prestamo' onclick='prestamos.editar_prestamo("+el.id_prestamo+")'></button></td></tr>");
+
+        });        
+      });
+
+    })
+  },
+
+  editar_prestamo:function(id){
+   console.log(id);
+   $.ajax({
+    url: '/prestamos/clientes/'+id,
+    type: 'get',
+    dataType: 'json'
+  })
+   .done(function(d) {
+    console.log(d);
+    cliente_id = d[0].id_prestamo;
+    estado = d[0].estado;
+
+    $("#nombres").val(d[0].nombre +" "+ d[0].primer_apellido);
+    $("#documento").val(d[0].documento);
+    $("#valor").val(d[0].valor_prestamo);
+    $("#interes").val(d[0].tasa_interes_id);
+    $("#interes_mensual").val(d[0].valor_interes_mensual);
+    $("#fecha_prestamo").val(d[0].fecha_prestamo);
+
+    $('#nombres').attr('readonly', 'true');
+    $('#documento').attr('readonly', 'true');
+    $("#md-editar").modal();
+  });
+
+ },
+
+ actualizar_prestamo:function(){
+
+  var datos = {
+    id: cliente_id,
+    estado: estado,
+    tipo_prestamo:$("#tipo_prestamo").val(),
+    documento:$("#documento").val(),
+    valor_prestamo:$("#valor").val(),
+    plazo:$("#plazo").val(),
+    tasa_interes:$("#interes").val(),
+    total_intereses:  $("#valor-interes").val(),
+    valor_interes_mensual:$("#interes_mensual").val(),
+    valor_pagar:$("#valor-pagar").val(),
+    fecha_prestamo:$("#fecha_prestamo").val()
+  };
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  $.ajax({
+    url: '/actualizar/prestamo',
+    type: 'post',
+    dataType: 'json',
+    data: datos
+  })
+  .done(function(resp) {
+    if (resp.mensaje == 1) {
+      console.log(resp);
+      new PNotify({
+        title: "Actualización prestamo",
+        text: "Prestamo actualizado con exito",
+        type: "success"
+      });   
+      $("#md-editar").modal("toggle");
+      prestamos.consultar_prestamo();
+      $('#valor').val("");
+      $('#fecha_prestamo').val("");
+      $('#plazo').val("");
+      $('#interes').val("");
+      $("#interes_mensual").val("");
+      $("#tipo_prestamo").val("");
+      $("#valor-pagar").val("");
+      $("#valor-interes").val("");
+      $("#nombres").val("");
+      $("#documento").val("");
+    }
+    if (resp.mensaje == 2) {
+      console.log(resp);
+      new PNotify({
+        title: "Actualización prestamo",
+        text: "Prestamo actualizado con exito",
+        type: "success"
+      });
+      $("#md-editar").modal("toggle");
+      prestamos.consultar_prestamo();
+      $('#valor').val("");
+      $('#fecha_prestamo').val("");
+      $('#plazo').val("");
+      $('#interes').val("");
+      $("#interes_mensual").val("");
+      $("#tipo_prestamo").val("");
+      $("#valor-pagar").val("");
+      $("#valor-interes").val("");
+      $("#nombres").val("");
+      $("#documento").val("");
+    }
+
+  });
+
+}
 }

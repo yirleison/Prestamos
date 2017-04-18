@@ -49,6 +49,7 @@
         <link rel="stylesheet" href="/assets/pnotify/pnotify.custom.min.css"/>
         <link rel="stylesheet" href="/assets/alertifyjs/css/alertify.css"/>
         <link rel="stylesheet" href="/assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="/assets/js/plugins/select2/select2.css">
         <link rel="stylesheet" href="/assets/css/principal.css">
 
         <script>
@@ -78,11 +79,13 @@
     <script type="text/javascript" src="/assets/pnotify/pnotify.custom.min.js"></script>
     <script type="text/javascript" src="/assets/alertifyjs/alertify.min.js"></script>
     <script type="text/javascript" src="/assets/js/prestamos.js"></script>
+    <script type="text/javascript" src="/assets/js/abonos.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
     <script type="text/javascript" src="/assets/js/validaciones.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/assets/js/validaciones.js"></script>
     <script type="text/javascript" src="/assets/js/jquery-validate/additional-methods.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/select2/select2.js"></script>
 
     @if (Session::has('notifier.notice'))
         <script>

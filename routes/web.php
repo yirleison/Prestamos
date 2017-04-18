@@ -48,6 +48,37 @@ Route::post('/crear/prestamo',[
   'uses' =>'prestamosController@crear_prestamo'
 ]);
 
+Route::get('/prestamo/consultar/cliente',[
+  'as'=>'consultar/cliente',
+  'uses' =>'prestamosController@consultar_cliente'
+]);
+
+Route::post('/consultar/prestamo',[
+  'as'=>'consultar/prestamo',
+  'uses'=>'prestamosController@consultar_prestamos'
+]);
+
+Route::get('/prestamos/clientes/{id}',[
+  'as'=>'/prestamos/clientes',
+  'uses'=>'prestamosController@consultar_prestamo_clientes'
+]);
+
+Route::post('actualizar/prestamo',[
+  'as'=>'/actualizar/prestamo',
+  'uses'=>'prestamosController@actualizar_prestamo'
+]);
+
+//Rutas para el módulo de abonos
+
+Route::get('abono/prestamos',[
+  'as'=>'/abono/prestamos',
+  'uses'=>'abonoController@index'
+]);
+
+Route::post('/crear/abono',[
+  'as'=>'/crear/abono',
+  'uses'=>'abonoController@registrar_abono'
+]);
 
 
 // Fin rutas  prestamos y asiganción de prestamos...

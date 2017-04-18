@@ -11,7 +11,7 @@
           <i class="fa fa-times"></i>
         </button>
         <span>
-          <img class="img-avatar img-avatar32" src="assets/img/avatars/avatar10.jpg" alt="">
+          <img class="img-avatar img-avatar32" src="/assets/img/avatars/avatar10.jpg" alt="">
           <span class="font-w600 push-10-l">Craig Stone</span>
         </span>
       </div>
@@ -93,28 +93,28 @@
               </li>
               <li>
                 <a href="base_pages_profile.html">
-                  <img class="img-avatar" src="assets/img/avatars/avatar9.jpg" alt="">
+                  <img class="img-avatar" src="/assets/img/avatars/avatar9.jpg" alt="">
                   <i class="fa fa-circle text-success"></i> John Parker
                   <div class="font-w400 text-muted"><small>Web Developer</small></div>
                 </a>
               </li>
               <li>
                 <a href="base_pages_profile.html">
-                  <img class="img-avatar" src="assets/img/avatars/avatar8.jpg" alt="">
+                  <img class="img-avatar" src="/assets/img/avatars/avatar8.jpg" alt="">
                   <i class="fa fa-circle text-success"></i> Julia Cole
                   <div class="font-w400 text-muted"><small>Web Designer</small></div>
                 </a>
               </li>
               <li>
                 <a href="base_pages_profile.html">
-                  <img class="img-avatar" src="assets/img/avatars/avatar8.jpg" alt="">
+                  <img class="img-avatar" src="/assets/img/avatars/avatar8.jpg" alt="">
                   <i class="fa fa-circle text-warning"></i> Rebecca Gray
                   <div class="font-w400 text-muted"><small>Photographer</small></div>
                 </a>
               </li>
               <li>
                 <a href="base_pages_profile.html">
-                  <img class="img-avatar" src="assets/img/avatars/avatar13.jpg" alt="">
+                  <img class="img-avatar" src="/assets/img/avatars/avatar13.jpg" alt="">
                   <i class="fa fa-circle text-warning"></i> Dennis Ross
                   <div class="font-w400 text-muted"><small>Graphic Designer</small></div>
                 </a>
@@ -277,14 +277,14 @@
             <li>
               <a href="#" class="nav-submenu" data-toggle="nav-submenu"><i class="fa fa-money" aria-hidden="true"></i><span class="sidebar-mini-hide"> Gestionar Prestamos</span></a>
               <ul>
-                <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Asignar Prestamos</span></a></li>
-                <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Consultar Prestamos</span></a></li>
+                <li><a href="/prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Asignar Prestamos</span></a></li>
+                <li><a href="/prestamo/consultar/cliente"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Consultar Prestamos</span></a></li>
               </ul>
             </li>
               <li>
               <a href="#" class="nav-submenu" data-toggle="nav-submenu"><i class="fa fa-money" aria-hidden="true"></i><span class="sidebar-mini-hide">Abonos</span></a>
               <ul>
-                <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Registrar Abono</span></a></li>
+                <li><a href="/abono/prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Registrar Abono</span></a></li>
                 <li><a href="prestamos"><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span class="sidebar-mini-hide">Consultar Abono</span></a></li>
               </ul>
             </li>
@@ -552,7 +552,7 @@
       <li>
         <div class="btn-group">
           <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
-            <img src="assets/img/avatars/avatar10.jpg" alt="Avatar">
+            <img src="/assets/img/avatars/avatar10.jpg" alt="Avatar">
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-right">
