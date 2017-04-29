@@ -18,6 +18,7 @@ class prestamosController extends Controller
   }
 
   public function get_tabla_clientes (){
+
     $clientes = Cliente::select('clientes.*')
     ->where('estado', 1)
     ->get();

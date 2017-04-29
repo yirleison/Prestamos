@@ -11,9 +11,11 @@ use App\models\Tasa_interes;
 use App\models\Prestamo;
 use App\models\Prestamo_abonos;
 
+
 class abonoController extends Controller
 {
 	public function index() {
+
 		$clientes =  Cliente::all();
 		return view("crear_abono", compact("clientes"));
 	}
@@ -45,12 +47,12 @@ class abonoController extends Controller
 		$t_pm = ($prestamo->valor_prestamo + $prestamo->valor_interes_mensual);
 
 		$con_abn  = Prestamo::select("prestamo_abonos.*","abono_prestamo.*")
-			->join("prestamo_abonos","prestamo.id","=","prestamo_abonos.prestamo_id")
-			->join("abono_prestamo","prestamo_abonos.abono_prestamo_id","=","abono_prestamo.id")
-			->where("prestamo_abonos.prestamo_id","=",$id_prestamo)
-			->orderBy('prestamo_abonos.id','desc')
-			->take(1)
-			->get();
+		->join("prestamo_abonos","prestamo.id","=","prestamo_abonos.prestamo_id")
+		->join("abono_prestamo","prestamo_abonos.abono_prestamo_id","=","abono_prestamo.id")
+		->where("prestamo_abonos.prestamo_id","=",$id_prestamo)
+		->orderBy('prestamo_abonos.id','desc')
+		->take(1)
+		->get();
 
 		if (count($con_abn) == 0) {
 
@@ -146,8 +148,8 @@ class abonoController extends Controller
 					}
 
 					if ($cambio_estado != null ) {
-					
-						return json_encode(["resp" => 1,($abn_cap - $prestamo->valor_prestamo)]);
+
+						return json_encode(["resp" => 3,"sobr"=>($abn_cap - $prestamo->valor_prestamo)]);
 					}
 				}
 
@@ -181,9 +183,9 @@ class abonoController extends Controller
 				if ($sal > $prestamo->valor_interes_mensual ) {
 
 					$abn_cap = ($sal - $prestamo->valor_interes_mensual);
-				
+
 					if ( $abn_cap < $prestamo->valor_prestamo ) {
-					
+
 						$abn_p = Abono_prestamo::create([
 
 							'abono_interes' => $prestamo->valor_interes_mensual,
@@ -224,7 +226,7 @@ class abonoController extends Controller
 			->orderBy('prestamo_abonos.id','desc')
 			->take(1)
 			->get();
-		
+
 			$nv_in_m = $p[0]->nuevo_interes_mensual;
 			$s_p = $p[0]->saldo_prestamo;
 			$dato_presamo =0;
@@ -265,7 +267,7 @@ class abonoController extends Controller
 				}
 
 				elseif ($sal < $nv_in_m ) {
-				
+
 					$interes_actual = ($nv_in_m-$sal);
 
 					$abn_p = Abono_prestamo::create([
@@ -294,9 +296,9 @@ class abonoController extends Controller
 				elseif ($sal > $nv_in_m) {
 
 					$abn_cap = ($sal - $nv_in_m);
-	
+
 					if ($abn_cap > $s_p) {
-			
+
 						$abn_p = Abono_prestamo::create([
 							'abono_interes' => $nv_in_m,
 							'fecha' =>$input["fecha"],
@@ -323,11 +325,11 @@ class abonoController extends Controller
 					}
 
 					if ($cambio_estado != null ) {
-					
-						return json_encode(["resp" => 3,($abn_cap - $s_p)]);
+
+						return json_encode(["resp" => 3,"sobr"=>($abn_cap - $s_p)]);
 					}
 				}
-					elseif ($sal == $nv_in_m) {
+				elseif ($sal == $nv_in_m) {
 
 					$abn_p = Abono_prestamo::create([
 
@@ -357,9 +359,9 @@ class abonoController extends Controller
 				if ($sal > $nv_in_m ) {
 
 					$abn_cap = ($sal - $nv_in_m);
-				
+
 					if ( $abn_cap < $s_p ) {
-					
+
 						$abn_p = Abono_prestamo::create([
 
 							'abono_interes' =>  $nv_in_m,
@@ -393,8 +395,42 @@ class abonoController extends Controller
 			else{
 				return false;
 			}
-						
+
 		}
+	}
+
+	public function consultar_abonos() {
+		
+		$clientes =  Cliente::all();
+		return view("consultar_abonos", compact("clientes"));
+
+	}
+
+	public function detalle_abonos ($id){
+
+		$de_pre = Cliente::select("clientes.*","prestamo.*","prestamo_abonos.*","abono_prestamo.*","abono_prestamo.id as id_abono")
+		->join("prestamo","clientes.id","=","prestamo.clientes_id")
+		->join("prestamo_abonos","prestamo.id","=","prestamo_abonos.prestamo_id")
+		->join("abono_prestamo","prestamo_abonos.abono_prestamo_id","=","abono_prestamo.id")
+		->where("prestamo_abonos.prestamo_id","=",$id)
+		->orderBy('prestamo_abonos.id','ASC')
+		->get();
+
+		if (count($de_pre)>0) {
+			$nombre = $de_pre[0]->nombre." ".$de_pre[0]->primer_apellido;
+			return view("detalle_abonos", compact("de_pre","nombre"));
+		}
+		else{
+			Notify::info("No se encontraron datos","Consultar abono");
+			return redirect()->route("/consultar/abonos");				
+		}
+
+	}
+
+	public function editar_abono($id){
+		$abn = Abono_prestamo::find($id);
+
+		return json_encode($abn);
 	}
 }
 

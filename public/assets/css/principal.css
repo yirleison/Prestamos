@@ -74,7 +74,7 @@
 
 .tabla-prestamos thead > tr > th {
   color: #fff;
-background-color: #5c90d2;
+background-color: #253c5a;
 border-bottom-color: #5c90d2
 }
 
@@ -89,4 +89,34 @@ border-bottom-color: #5c90d2
 
 .modal-global h4 {
   color:white;
+}
+
+.btn_eyed {
+  font-size: 20px;
+}
+
+.btn-regresar{
+  background: #253c5a;
+  border-color: #666d77;
+  font-weight: bold;
+}
+
+.btn-regresar:hover{
+  background: #183d6d;
+}
+
+.nomb_cl_abn {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.tbl_usuario thead > tr > th {
+  color: #fff;
+background-color: #253c5a;
+border-bottom-color: #5c90d2
+}
+
+.acc_usuario {
+  width: 20%;
+  text-align: center;
 }

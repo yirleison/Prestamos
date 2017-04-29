@@ -20,12 +20,12 @@ Auth::routes();
 // Rutas para la vista usuarios...
 Route::resource('usuarios','UsuarioController');
 Route::get('usuarios/tabla/usuarios','UsuarioController@tabla_usuarios');
-Route::post('usuarios/estado/{id}','UsuarioController@inactivar_usuario');
+Route::post('/usuarios/estado/{id}','UsuarioController@inactivar_usuario');
 // Rutas para la vista usuarios...
 
 // Rutas para la vista clientes...
-Route::resource('clientes','ClienteController');
-Route::get('clientes/tabla/clientes','ClienteController@tabla_clientes');
+Route::resource('/clientes','ClienteController');
+Route::get('/clientes/tabla/clientes','ClienteController@tabla_clientes');
 Route::post('clintes/clientes/actualizar','ClienteController@actualizar_datos');
 // Rutas para la vista clientes...
 
@@ -80,6 +80,19 @@ Route::post('/crear/abono',[
   'uses'=>'abonoController@registrar_abono'
 ]);
 
+Route::get('/consultar/abonos',[
+  'as'=>'/consultar/abonos',
+  'uses'=>'abonoController@consultar_abonos'
+]);
 
+Route::get('/detalle/abonos/{id}',[
+  'as'=>'/detalle/abonos',
+  'uses'=>'abonoController@detalle_abonos'
+]);
+
+Route::get('/editar/abono/{id}',[
+  'as'=>'/editar/abono',
+  'uses'=>'abonoController@editar_abono'
+]);
 // Fin rutas  prestamos y asiganción de prestamos...
 Route::get('/home', 'HomeController@index');

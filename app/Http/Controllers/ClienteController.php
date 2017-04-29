@@ -23,7 +23,7 @@ class ClienteController extends Controller
   {
     $document = Tipo_documento::pluck('tipo_documento','id');
     $cuenta = Tipo_cuenta::pluck('tipo_cuenta','id');
-    return View('clientes', compact('document','cuenta'));
+    return View('/clientes', compact('document','cuenta'));
   }
 
   /**
@@ -85,9 +85,8 @@ class ClienteController extends Controller
 
   public function tabla_clientes(){
 
-    $resultado = Cliente::select('clientes.*')
-    ->get();
-
+    $resultado = Cliente::all();
+    
     return Datatables::of($resultado)
 
     ->addColumn('action', function ($resultado) {
@@ -162,14 +161,19 @@ class ClienteController extends Controller
   // En este método actualizo el estado del cliente.....
   public function update(Request $request, $id)
   {
-      $cliente = Cliente::find($id);
-      if ($cliente != null) {
-          $cliente->update(['estado'=>$request->input('estado')]);
+    
+      $cliente =  Cliente::find($id);
 
-          return json_encode(["mensaje"=>1]);
-      }else {
-          return json_encode(["mensaje"=>2]);
-      }
+    if ($cliente != null) {
+
+      $cliente->update(['estado'=>$request->input('estado')]);
+       
+      return json_encode(["mensaje"=>1]);
+
+    }else {
+
+      return json_encode(["mensaje"=>2]);
+    }
   }
 
   public function actualizar_datos(Request $request){

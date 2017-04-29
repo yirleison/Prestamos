@@ -45,14 +45,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
+   
 
     /**
      * Create a new user instance after a valid registration.
@@ -60,12 +53,28 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
+
+    
+  public function index()
+  {
+    $roles = Rol::pluck('nombre','id');
+    return view('/usuarios',compact('roles'));
+
+  }
+
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+            'nombre' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'rol' => bcrypt($request->input('rol')),
+            ]);
+
+      //  Devuelvo una respuesta...
+          return response()->json([
+            "mensaje"=> 'se guardo'
+            ]);
+      }
+  
 }

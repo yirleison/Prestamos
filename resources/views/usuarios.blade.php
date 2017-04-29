@@ -15,10 +15,10 @@
         </a>
       @endsection
 
-      <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-        <div class="modal-dialog">
+      <div class="col-md-7 col-md-offset-3 modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-global">
           <div class="panel panel-primary">
-            <div class="panel-heading">
+            <div class="block-header bg-primary-dark">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               <h4 class="titilo-modal-usuario" id="contactLabel"><i class="fa fa-users" aria-hidden="true"></i>
                 Registro Usuario</h4>
@@ -66,14 +66,14 @@
       <div class="col-md-12 col-xs-12 col-lg-12  margin-movil">
         <div class="block content-tabla table-responsive" >
           <div class="block-content">
-                <table class="table table-bordered table-striped table-responsive  " id="users-table" style="width:100%">
+                <table class="table table-bordered table-striped table-responsive tbl_usuario text-center " id="users-table" style="width:100%">
                   <thead>
-                    <tr>
+                    <tr >
                       <th class="text-center">Nombre</th>
                       <th class="text-center">Correo</th>
                       <th class="text-center">Rol</th>
                       <th class="text-center">Estado</th>
-                      <th class="text-center">Acciones</th>
+                      <th class="acc_usuario">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -86,10 +86,10 @@
     </div>
 
     {{-- modal para actualizar --}}
-    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <div class="col-md-7 col-md-offset-3 modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+      <div class="modal-global">
         <div class="panel panel-primary">
-          <div class="panel-heading">
+          <div class="block-header bg-primary-dark">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="panel-title" id="contactLabel"><i class="fa fa-user" aria-hidden="true"></i>
               Actualizar Usuario</h4>
@@ -127,7 +127,7 @@
             <div class="panel-footer" style="margin-bottom:-14px;">
               <input type="submit" id="actualizar" onclick="" class="btn btn-success" value="Actualizar"/>
               <!--<span class="glyphicon glyphicon-ok"></span>-->
-              <button style="float: right;" type="submit" class="btn btn-default btn-close" data-dismiss="modal">Cerrar</button>
+              <button style="float: right;" type="submit" class="btn btn-danger btn-close" data-dismiss="modal">Cerrar</button>
             </div>
             {!!Form::close()!!}
           </div>
@@ -141,8 +141,7 @@
 
   <script>
   usuarios.tabla_usuarios();
-  validacion_usuarios.crear_usuario();
-  validacion_usuarios.actualizar_usuario();
+  
   </script>
 
 @endsection

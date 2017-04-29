@@ -18,8 +18,8 @@
         {{-- Modal registro cliente --}}
         <div class="modal fade charts-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
           <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
+            <div class="modal-content modal-global">
+              <div class="block-header bg-primary-dark">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user" aria-hidden="true"></i> Registro Cliente</h4>
               </div>
@@ -99,7 +99,7 @@
   <div class="col-md-12 col-xs-12 col-lg-12 margin-movil">
   <div class="block content-tabla table-responsive" >
     <div class="block-content">
-          <table class="table table-bordered table-striped table-responsive  " id="users-table" style="width:100%">
+          <table class="table table-bordered table-striped table-responsive tabla-prestamos" id="tbl_cliente" style="width:100%">
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -127,8 +127,8 @@
     <div class="col-md-12 col-sm-12 col-lg-12">
       <div class="modal fade" id="mod_editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
+          <div class="modal-content modal-global">
+            <div class="block-header bg-primary-dark">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
               <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user" aria-hidden="true"></i> Información Cliente</h4>
             </div>
@@ -211,8 +211,8 @@
 
 @section('scripts')
   <script>
-validarCliente.cliente();
   cliente.tabla_clientes();
+  validarCliente.cliente();
   </script>
 
 @endsection

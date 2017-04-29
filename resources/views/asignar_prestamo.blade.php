@@ -13,7 +13,7 @@
   <div class="col-md-12 col-xs-12 col-lg-12  margin-movil">
     <div class="block content-tabla table-responsive">
       <div class="block-content table-responsive ">
-        <table class="table table-bordered table-striped table-responsive  " id="users-table" style="width:100%">
+        <table class="table table table table-striped table-borderless table-header-bg table-responsive table-hover  tabla-prestamos" id="tbl_clientes" style="width:100%">
           <thead>
             <tr>
               <th class="text-center">Documento</th>
@@ -108,8 +108,11 @@
 @endsection
 
 @section('scripts')
+
 <script type="text/javascript">
+
   prestamos.tabla_prestamos_clientes();
+
   $('#sandbox-container').datepicker({
     language: "es",
     format: 'yyyy-mm-dd'

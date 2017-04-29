@@ -16,6 +16,5 @@ class Usuarios extends Model
       'password',
       'estado',
       'rol_id',
-      'estado'
     ];
 }

@@ -20,7 +20,7 @@ class UsuarioController extends Controller
   public function index()
   {
     $roles = Rol::pluck('nombre','id');
-    return view('usuarios',compact('roles'));
+    return view('/usuarios',compact('roles'));
 
   }
 
@@ -73,18 +73,18 @@ class UsuarioController extends Controller
       $btn_inactivar = "";
       $btn_eliminar = "";
 
-      $btn_editar = '<a href="#" class="btn btn-primary btn-xs botones" onclick="usuarios.editar_usuario('.$result->id.');" id="editar"><i class="fa fa-pencil-square-o iconos-botones" aria-hidden="true"> </i> Editar</a>';
-      $btn_eliminar = '<a href="#" class="btn btn-danger btn-xs botones" onclick="usuarios.eliminar('.$result->id.');"  id="eliminar"><i class="fa fa-trash-o iconos-botones" aria-hidden="true"></i> Eliminar</a>';
+      $btn_editar = '<a href="#" class="btn btn-primary btn-xs botones" onclick="usuarios.editar_usuario('.$result->id.');" id="editar" title="Editar"><i class="fa fa-pencil-square-o iconos-botones" aria-hidden="true"> </i></a>';
+      $btn_eliminar = '<a href="#" class="btn btn-danger btn-xs botones" onclick="usuarios.eliminar('.$result->id.');"  id="eliminar"><i class="fa fa-trash-o iconos-botones" aria-hidden="true" title="Eliminar"></i></a>';
 
       if($result->estado == 0){
         $activo = 1;
-        $btn_inactivar = '<a href="#" class="bt btn-success btn-xs botones" id="editar" onclick="usuarios.cambiar_estado('.$result->id.','.$activo.');"><i class="fa fa-check" aria-hidden="true"></i>
-        Activar</a>';
+        $btn_inactivar = '<a href="#" class="bt btn-success btn-xs botones" id="editar" onclick="usuarios.cambiar_estado('.$result->id.','.$activo.');"><i class="fa fa-check" aria-hidden="true" title="Activar"></i>
+        </a>';
       }else {
         if ($result->estado == 1) {
           $inactivo = 0;
-          $btn_inactivar = '<a href="#" class="bt btn-danger btn-xs botones" id="editar" onclick="usuarios.cambiar_estado('.$result->id.','.$inactivo.');"><i class="fa fa-remove" aria-hidden="true"></i>
-          Inactivar</a>';
+          $btn_inactivar = '<a href="#" class="bt btn-danger btn-xs botones" id="editar" onclick="usuarios.cambiar_estado('.$result->id.','.$inactivo.');"><i class="fa fa-remove" aria-hidden="true" title="Inactivar"></i>
+           </a>';
         }
       }
 
@@ -158,13 +158,17 @@ class UsuarioController extends Controller
 
   // Método para cambiar estado....
   public function inactivar_usuario (Request $request, $id){
+
     $usuarios =  Usuarios::find($id);
 
-    $usuarios = Usuarios::find($id);
     if ($usuarios != null) {
+
       $usuarios->update(['estado'=>$request->input('estado')]);
+       
       return json_encode(["mensaje"=>1]);
+
     }else {
+
       return json_encode(["mensaje"=>2]);
     }
 

@@ -1,12 +1,13 @@
 
 //  Declaracion variables.....
-var tabla = null;
+
 var id_cliente_editar,
 cuenta_id,
 id_usuario,
 cliente_id,
 estado,
-table;
+table = null,
+tabla = null;
 var valor = 0 ,tasa_interes,valor_interes = 0,total_intereses = 0,valor_pagar = 0,plazo;
 
 //MEDIA QUERIES
@@ -19,7 +20,7 @@ var usuarios = {
 
   tabla_usuarios:function(){
     $(function() {
-      tabla = $('#users-table').DataTable({
+      table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
         ajax: '/usuarios/tabla/usuarios',
@@ -75,7 +76,7 @@ var usuarios = {
     });
 
     $.ajax({
-      url: '/usuarios',
+      url: '/register',
       type: 'post',
       data: datos,
     }).done(function(success){
@@ -93,7 +94,7 @@ var usuarios = {
         });
       }
       tabla.ajax.reload();
-      console.log(success);
+     
     });
   },
 
@@ -165,6 +166,7 @@ var usuarios = {
   },
 
   cambiar_estado:function (id,estado) {
+
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -177,15 +179,15 @@ var usuarios = {
       data: {estado:estado}
     })
     .done(function(estado) {
-      if (estado.mensaje==1) {
+      if (estado.mensaje == 1) {
         new PNotify({
           title: "Actualización",
           text: "Se ha cambiado el estado",
           type: "success",
         });
-        tabla.ajax.reload();
+        table.ajax.reload();
       }else {
-        if (estado.mensaje==2) {
+        if (estado.mensaje == 2) {
           new PNotify({
             title: "Actualización",
             text: "Ha ocurrido un error no se pudo realizar esta operación",
@@ -246,7 +248,7 @@ var cliente = {
 
     $(function() {
 
-      tabla = $('#users-table').DataTable({
+      table = $('#tbl_cliente').DataTable({
         processing: true,
         serverSide: true,
         ajax: '/clientes/tabla/clientes',
@@ -430,6 +432,7 @@ var cliente = {
           text: "Actualización realizada con exito",
           type: "info",
         });
+        table.ajax.reload();
       }
       if (dato.mensaje == 2) {
         new PNotify({
@@ -474,7 +477,7 @@ var cliente = {
           text: "Se ha cambiado el estado",
           type: "success",
         });
-        tabla.ajax.reload();
+        table.ajax.reload();
       }else {
         if (estado.mensaje==2) {
           new PNotify({
@@ -492,7 +495,7 @@ var prestamos = {
 
   tabla_prestamos_clientes:function () {
     $(function() {
-      tabla = $('#users-table').DataTable({
+      tabla = $('#tbl_clientes').DataTable({
         processing: true,
         serverSide: true,
         ajax: '/prestamos/tabla/clientes',
