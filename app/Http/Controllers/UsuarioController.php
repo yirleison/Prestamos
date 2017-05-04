@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\Usuarios;
+use App\User;
 use App\models\Rol;
 use Datatables;
 use DB;
@@ -44,7 +44,7 @@ class UsuarioController extends Controller
   /*Método para crear usuarios implementando ajax*/
   public function store(Request $request)
   {
-    $usuarios = new Usuarios();
+    $usuarios = new User();
     if ($request->ajax()) {
       $usuarios->nombre = $request->input('nombre');
       $usuarios->email = $request->input('email');
@@ -61,8 +61,8 @@ class UsuarioController extends Controller
   // Método para mostrar la tabla en la vista...
   public function tabla_usuarios(){
 
-    $result = Usuarios::select('login.*','rol.nombre as rol')
-    ->join('rol','rol.id', '=','login.rol_id')
+    $result = User::select('users.*','rol.nombre as rol')
+    ->join('rol','rol.id', '=','users.rol_id')
     ->get();
 
     return Datatables::of($result)

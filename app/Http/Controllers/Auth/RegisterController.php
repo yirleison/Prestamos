@@ -6,6 +6,11 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\models\Usuarios;
+use App\models\Rol;
+use Datatables;
+use DB;
+use Pnotify;
 
 class RegisterController extends Controller
 {
@@ -57,8 +62,8 @@ class RegisterController extends Controller
     
   public function index()
   {
-    $roles = Rol::pluck('nombre','id');
-    return view('/usuarios',compact('roles'));
+    
+    return view('auth.register',compact('roles'));
 
   }
 

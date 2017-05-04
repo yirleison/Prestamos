@@ -45,7 +45,7 @@
                   <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
                       <label for="">Rol</label>
-                      {!!Form::select('rol',$roles,null,['class' => 'form-control','id'=>'rol','placeholder'=>'Seleccione'])!!}
+                      {!!Form::select('rol',"null",null,['class' => 'form-control','id'=>'rol','placeholder'=>'Seleccione'])!!}
                   </div>
                   </div>
                 </div>
