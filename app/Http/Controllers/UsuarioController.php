@@ -1,5 +1,5 @@
 <?php
-
+//sublimecodeintel
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -44,11 +44,13 @@ class UsuarioController extends Controller
   /*Método para crear usuarios implementando ajax*/
   public function store(Request $request)
   {
+
     $usuarios = new User();
+
     if ($request->ajax()) {
       $usuarios->nombre = $request->input('nombre');
       $usuarios->email = $request->input('email');
-      $usuarios->password = $request->input('password');
+      $usuarios->password =  bcrypt($request->input('password'));
       $usuarios->rol_id = $request->input('rol');
       $usuarios->save();
       //  Devuelvo una respuesta...
@@ -118,10 +120,10 @@ class UsuarioController extends Controller
   // Método para buscar el usuario y loego retornarlo a la vista para actualizar...
   public function edit($id)
   {
-    $usuarios = Usuarios::find($id);
+    $usuarios = User::find($id);
 
     if($usuarios == null){
-      // utilar nitify para los mensajes...
+      
       return redirect('usuarios');
     }else {
       return json_encode($usuarios);
@@ -140,7 +142,7 @@ class UsuarioController extends Controller
   public function update(Request $request, $id)
   {
 
-    $usuarios = Usuarios::find($id);
+    $usuarios = User::find($id);
     if ($usuarios != null) {
       $datos=[
         'nombre' => $request->input('nombre'),
@@ -159,7 +161,7 @@ class UsuarioController extends Controller
   // Método para cambiar estado....
   public function inactivar_usuario (Request $request, $id){
 
-    $usuarios =  Usuarios::find($id);
+    $usuarios =  User::find($id);
 
     if ($usuarios != null) {
 
@@ -183,8 +185,21 @@ class UsuarioController extends Controller
   */
   public function destroy($id)
   {
-    $usuarios =  Usuarios::find($id);
-    $usuarios->delete();
+    $usuario =  User::find($id);
+    $usuario->delete();
     return json_encode(['mensaje' => 1]);
+  }
+
+  public function validar_email(Request $request) {
+
+    $email = User::select("email")->where("email","=",$request->input("email"))->get();
+
+    if (count($email) > 0) {
+
+      return json_encode(["existe"=>1]);
+    }
+    else {
+      return json_encode(["existe"=>0]);
+    }
   }
 }

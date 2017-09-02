@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8">
 
-        <title>OneUI - Admin Dashboard Template &amp; UI Framework</title>
+        <title>Prestamos S.A.S</title>
 
 
         <meta name="description" content="OneUI - Admin Dashboard Template &amp; UI Framework created by pixelcave and published on Themeforest">
@@ -37,10 +37,13 @@
         <!-- Stylesheets -->
         <!-- Web fonts -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
-
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="/https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Bootstrap and OneUI CSS framework -->
+
         <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
 
         <link rel="stylesheet" id="css-main" href="/assets/css/oneui.css">
         {{-- css para jquery dataTable --}}
@@ -74,18 +77,21 @@
      <script src="/assets/js/core/jquery.countTo.min.js"></script>
      <script src="/assets/js/core/jquery.placeholder.min.js"></script>
      <script src="/assets/js/core/js.cookie.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
      <script src="/assets/js/app.js"></script>
     <!-- script para el login y en general -->
     <script type="text/javascript" src="/assets/pnotify/pnotify.custom.min.js"></script>
     <script type="text/javascript" src="/assets/alertifyjs/alertify.min.js"></script>
-    <script type="text/javascript" src="/assets/js/prestamos.js"></script>
-    <script type="text/javascript" src="/assets/js/abonos.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
-    <script type="text/javascript" src="/assets/js/validaciones.js"></script>
-    <script type="text/javascript" src="/assets/js/validaciones.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery-validate/additional-methods.min.js"></script>
+    <script type="text/javascript" src="/assets/js/prestamos.js"></script>
+    <script type="text/javascript" src="/assets/js/abonos.js"></script>
+    <script type="text/javascript" src="/assets/js/validaciones.js"></script>
     <script type="text/javascript" src="/assets/js/plugins/select2/select2.js"></script>
+
+
 
     @if (Session::has('notifier.notice'))
         <script>

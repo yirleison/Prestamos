@@ -21,9 +21,9 @@ class ClienteController extends Controller
   */
   public function index()
   {
-    $document = Tipo_documento::pluck('tipo_documento','id');
-    $cuenta = Tipo_cuenta::pluck('tipo_cuenta','id');
-    return View('/clientes', compact('document','cuenta'));
+    $document = Tipo_documento::pluck('tipo_documento', 'id');
+    $cuenta = Tipo_cuenta::pluck('tipo_cuenta', 'id');
+    return View('/clientes', compact('document', 'cuenta'));
   }
 
   /**
@@ -33,7 +33,7 @@ class ClienteController extends Controller
   */
   public function create()
   {
-    //
+        //
   }
 
   /**
@@ -44,10 +44,9 @@ class ClienteController extends Controller
   */
   public function store(Request $request)
   {
-    if($request->ajax()){
-
+    if ($request->ajax()) {
       try {
-        DB::transaction(function() use($request) {
+        DB::transaction(function () use ($request) {
 
           $cliente_id = Cliente::create([
             'nombre' => $request->input('nombre'),
@@ -59,7 +58,7 @@ class ClienteController extends Controller
             'celular'  => $request->input('celular'),
             'email' => $request->input('email'),
             'tipo_documento_id'=> $request->input('tipo_documento'),
-          ]);
+            ]);
 
 
 
@@ -76,14 +75,13 @@ class ClienteController extends Controller
       } catch (Exception $e) {
         return json_encode(["respuesta"=>2]);
       }
-    }
-
-    else{
+    } else {
       return json_encode(["respuesta"=>3]);
     }
   }
 
-  public function tabla_clientes(){
+  public function tabla_clientes()
+  {
 
     $resultado = Cliente::all();
     
@@ -93,23 +91,22 @@ class ClienteController extends Controller
       $btn_editar = "";
       $btn_inactivar = "";
 
-      $btn_editar = '<a href="#" class="bt btn-primary btn-xs botones" id="editar" onclick="cliente.editar('.$resultado->id.');"><i class="fa fa-plus" aria-hidden="true"></i>
-      </a>';
+      $btn_editar = '<a href="#" class="bt btn-primary btn-xs botones" id="editar" title="Editar cliente" onclick="cliente.editar('.$resultado->id.');"><i class="fa fa-plus" aria-hidden="true"></i>
+    </a>';
 
-      if($resultado->estado == 0){
-        $activo = 1;
-        $btn_inactivar = '<a href="#" class="bt btn-success btn-xs botones" id="editar" onclick="cliente.cambiar_estado('.$resultado->id.','.$activo.');"><i class="fa fa-check" aria-hidden="true"></i>
-          Activar</a>';
-      }else {
-        if ($resultado->estado == 1) {
-          $inactivo = 0;
-          $btn_inactivar = '<a href="#" class="bt btn-danger btn-xs botones" id="editar" onclick="cliente.cambiar_estado('.$resultado->id.','.$inactivo.');"><i class="fa fa-remove" aria-hidden="true"></i>
-          Inactivar</a>';
-        }
+    if ($resultado->estado == 0) {
+      $activo = 1;
+      $btn_inactivar = '<a href="#" class="bt btn-success btn-xs botones" id="editar" title="inactivar cliente" onclick="cliente.cambiar_estado('.$resultado->id.','.$activo.');"><i class="fa fa-check" aria-hidden="true"></i>
+      Activar</a>';
+    } else {
+      if ($resultado->estado == 1) {
+        $inactivo = 0;
+        $btn_inactivar = '<a href="#" class="bt btn-danger btn-xs botones" id="editar" title="Activar cliente"onclick="cliente.cambiar_estado('.$resultado->id.','.$inactivo.');"><i class="fa fa-remove" aria-hidden="true"></i>
+        Inactivar</a>';
       }
-      return $btn_editar.$btn_inactivar;
-
-    })
+    }
+    return $btn_editar.$btn_inactivar;
+  })
     ->editColumn('estado', function ($resultado) {
       return $resultado->estado == 1 ? "Activo" : "Inactivo";
     })
@@ -126,7 +123,6 @@ class ClienteController extends Controller
   */
   public function show($id)
   {
-
   }
 
   /**
@@ -138,16 +134,16 @@ class ClienteController extends Controller
   public function edit($id)
   {
 
-    $cliente = Cliente::select('clientes.*','cuenta.numero as cuenta','cuenta.id as cuenta_id','tipo_cuenta.id as id_tipo_cuenta','tipo_documento')
-    ->leftJoin('cuenta','clientes.id','=','clientes_id')
-    ->leftJoin('tipo_cuenta','tipo_cuenta.id','=','tipo_cuenta_id')
-    ->join('tipo_documento','tipo_documento.id','=','tipo_documento_id')
+    $cliente = Cliente::select('clientes.*', 'cuenta.numero as cuenta', 'cuenta.id as cuenta_id', 'tipo_cuenta.id as id_tipo_cuenta', 'tipo_documento')
+    ->leftJoin('cuenta', 'clientes.id', '=', 'clientes_id')
+    ->leftJoin('tipo_cuenta', 'tipo_cuenta.id', '=', 'tipo_cuenta_id')
+    ->join('tipo_documento', 'tipo_documento.id', '=', 'tipo_documento_id')
     ->where('clientes.id', $id)
     ->get();
 
     return response()->json([
       "cliente"=>$cliente
-    ]);
+      ]);
   }
 
   /**
@@ -161,67 +157,79 @@ class ClienteController extends Controller
   // En este método actualizo el estado del cliente.....
   public function update(Request $request, $id)
   {
-    
-      $cliente =  Cliente::find($id);
+
+    $cliente =  Cliente::find($id);
 
     if ($cliente != null) {
-
       $cliente->update(['estado'=>$request->input('estado')]);
-       
+
       return json_encode(["mensaje"=>1]);
-
-    }else {
-
+    } else {
       return json_encode(["mensaje"=>2]);
     }
   }
 
-  public function actualizar_datos(Request $request){
+  public function actualizar_datos(Request $request)
+  {
 
-    if($request->ajax()){
-
-      //Actualizo todo lo que tenga que ver con el cliente...
+    if ($request->ajax()) {
+            //Actualizo todo lo que tenga que ver con el cliente...
       $cliente = CLiente::find($request->input('id_cliente_editar'));
 
-      if($cliente != null){
+      if ($cliente != null) {
+
         $datos_cliente = [
-          'nombre' => $request->input('nombre_editar'),
-          'primer_apellido' => $request->input('primer_apellido_editar'),
-          'segundo_apellido' => $request->input('segundo_apellido_editar'),
-          'documento' => $request->input('documento_editar'),
-          'direccion' => $request->input('direccion_editar'),
-          'telefono' => $request->input('telefono_editar'),
-          'celular' => $request->input('celular_editar'),
-          'email' => $request->input('email_editar'),
-          'estado' => $request->input('estado_editar'),
-          'tipo_documento_id' => $request->input('tipo_documento_editar')
+
+        'nombre' => $request->input('nombre_editar'),
+        'primer_apellido' => $request->input('primer_apellido_editar'),
+        'segundo_apellido' => $request->input('segundo_apellido_editar'),
+        'documento' => $request->input('documento_editar'),
+        'direccion' => $request->input('direccion_editar'),
+        'telefono' => $request->input('telefono_editar'),
+        'celular' => $request->input('celular_editar'),
+        'email' => $request->input('email_editar'),
+        'estado' => $request->input('estado_editar'),
+        'tipo_documento_id' => $request->input('tipo_documento_editar')
         ];
 
         $cliente->update($datos_cliente);
-      }else {
-        return json_encode(["mensaje"=>3]);
-      }
+      
+        $cuenta =  Cuenta::where('clientes_id', $cliente->id)->first();
 
-      // Nota: cuando realizo una consulta con where siempre debo de poner al final ->firts() o ->get()......
-      $cuenta =  Cuenta::where('clientes_id',$request->input('id_cliente_editar'))->first();
+        if ($request->input('tipo_cuenta_editar') == "" && $request->input('cuenta_editar')=="") {
+          return json_encode(["mensaje"=>1]);
+        }
 
-      if( $cuenta !=null ){
+        if ($cuenta !=null) {
 
-        $datos_cuenta = [
+          $datos_cuenta = [
           'numero' => $request->input('cuenta_editar'),
-          'tipo_cuenta_id' => $request->input('tipo_cuenta_editar'),
-        ];
-        $cuenta->update($datos_cuenta);
+          'tipo_cuenta_id' => $request->input('tipo_cuenta_editar')
+          ];
+
+          $cuenta->update($datos_cuenta);
+        }
+
+        else{
+          $crear_cuenta = Cuenta::create([
+
+           'numero' => $request->input('cuenta_editar'),
+           'tipo_cuenta_id' => $request->input('tipo_cuenta_editar'),
+           'clientes_id' => $cliente->id
+           ]);
+        }
 
         return json_encode(["mensaje"=>1]);
+    } 
+    else {
+       return json_encode(["mensaje"=>2]);
+    } 
 
-      }else {
-        return json_encode(["mensaje"=>2]);
-      }
-
-    }else {
-      return json_encode(["mensaje"=>4]);
     }
+    else {
+      return json_encode(["mensaje"=>3]);
+    }
+
   }
 
   /**
@@ -232,6 +240,6 @@ class ClienteController extends Controller
   */
   public function destroy($id)
   {
-    //
+        //
   }
 }

@@ -76,7 +76,7 @@ var usuarios = {
     });
 
     $.ajax({
-      url: '/register',
+      url: '/usuarios',
       type: 'post',
       data: datos,
     }).done(function(success){
@@ -86,6 +86,7 @@ var usuarios = {
           text: "Registro ha sido exitoso",
           type: "success",
         });
+        $('#formulario-usuario').modal("toggle");
       }else {
         new PNotify({
           title: "Error",
@@ -93,8 +94,9 @@ var usuarios = {
           type: "danger",
         });
       }
-      tabla.ajax.reload();
-     
+
+      table.ajax.reload();
+
     });
   },
 
@@ -146,12 +148,15 @@ var usuarios = {
       data:datos
     })
     .done(function(dato) {
+
       if(dato.mensaje == 1){
         new PNotify({
           title: "Actualización",
           text: "Actualización realizada con exito",
           type: "info",
         });
+        $('#modal_editar').modal("toggle");
+        table.ajax.reload();
       }
       if (dato.mensaje == 2) {
         new PNotify({
@@ -160,7 +165,7 @@ var usuarios = {
           type: "danger",
         });
       }
-      $('#modal_edit').modal('toggle');
+      $('#modal_editar').modal('toggle');
     });
 
   },
@@ -228,11 +233,9 @@ var usuarios = {
         url: '/usuarios/'+id,
         type: 'DELETE',
         dataType: 'json'
-      })
-
-      .done(function(success) {
-        tabla.ajax.reload();
+      }).done(function(success) {
         console.log(success);
+        table.ajax.reload();
       });
     }).on('pnotify.cancel', function(){
 
@@ -337,20 +340,27 @@ var cliente = {
         $('#tipo_cuenta').val(''),
         $('#cuenta').val('')
 
+        $("#md_crearCliente").modal("toggle");
         tabla.ajax.reload();
 
-      }if(respuesta.respuesta==2){
+      }
+
+      if(respuesta.respuesta==2){
         new PNotify({
           title: "Registro",
           text: "Ha ocurrido un error ",
           type: "info",
         });
-      } if(respuesta.respuesta==3){
+         $("#md_crearCliente").modal("toggle");
+      } 
+
+      if(respuesta.respuesta==3){
         new PNotify({
           title: "Registro",
           text: "No se ha podido realizar el registro",
           type: "info",
         });
+        $("#md_crearCliente").modal("toggle");
       }
     });
   },
@@ -426,32 +436,30 @@ var cliente = {
       data: datos
     })
     .done(function(dato) {
+
       if(dato.mensaje == 1){
+        
         new PNotify({
           title: "Actualización",
           text: "Actualización realizada con exito",
           type: "info",
         });
+        $('#mod_editar').modal("toggle");
         table.ajax.reload();
       }
+
       if (dato.mensaje == 2) {
         new PNotify({
           title: "Actualización",
-          text: "No se pudo realizar la Actualización",
+          text: "ha ocurrido un error no se ha podido realizar la Actualización",
           type: "danger",
         });
       }
+
       if (dato.mensaje == 3) {
         new PNotify({
           title: "Actualización",
           text: "No se pudo realizar la Actualización",
-          type: "danger",
-        });
-      }
-      if (dato.mensaje == 4) {
-        new PNotify({
-          title: "Actualización",
-          text: "Ha ocurrido un error intente nuevamente",
           type: "danger",
         });
       }
@@ -652,43 +660,58 @@ var prestamos = {
             tipo = "Abierto";
           }
           if (el.estado == 1) {
-            esta = "activo";
+            esta = "Activo";
           }
-          $("#tbody").append("<tr><td>"+el.documento+"</td><td>"+el.nombre +' '+el.primer_apellido+"</td><td>"+el.fecha_prestamo+"</td><td>"+el.valor_prestamo+"</td><td>"+el.interes +" %"+"</td><td>"+el.valor_interes_mensual+"</td><td>"+esta+"</td><td><button class=' btn btn-primary fa fa-pencil-square-o' title='Editar prestamo' onclick='prestamos.editar_prestamo("+el.id_prestamo+")'></button></td></tr>");
+          $("#tbody").append("<tr><td>"+el.documento+"</td><td>"+el.nombre +' '+el.primer_apellido+"</td><td>"+el.fecha_prestamo+"</td><td>"+el.valor_prestamo+"</td><td>"+el.interes +" %"+"</td><td>"+el.valor_interes_mensual+"</td><td><span class='label label-success' style='font-size:11px;'>"+esta+"</span></td><td><button class=' btn btn-primary fa fa-pencil-square-o' title='Editar prestamo' onclick='prestamos.editar_prestamo("+el.id_prestamo+")'></button></td></tr>");
 
         });        
       });
-
+      prestamos.cartera_cliente($("#prestamo").val());
     })
   },
 
-  editar_prestamo:function(id){
-   console.log(id);
+  cartera_cliente:function(id) {
    $.ajax({
-    url: '/prestamos/clientes/'+id,
+    url: '/cartera/prestamos/'+id,
     type: 'get',
     dataType: 'json'
-  })
-   .done(function(d) {
-    console.log(d);
-    cliente_id = d[0].id_prestamo;
-    estado = d[0].estado;
-
-    $("#nombres").val(d[0].nombre +" "+ d[0].primer_apellido);
-    $("#documento").val(d[0].documento);
-    $("#valor").val(d[0].valor_prestamo);
-    $("#interes").val(d[0].tasa_interes_id);
-    $("#interes_mensual").val(d[0].valor_interes_mensual);
-    $("#fecha_prestamo").val(d[0].fecha_prestamo);
-
-    $('#nombres').attr('readonly', 'true');
-    $('#documento').attr('readonly', 'true');
-    $("#md-editar").modal();
+  }).done(function(datos) {
+    console.log(datos[0]);
+    console.log(datos[1]);
+    console.log(datos[2]);
+    $("#tbody_p").empty();
+    $("#tbody_p").append("<tr><td><span class='label label-danger' style='font-size: 14px;'> $: "+ datos[2]+"</span></td><td><span class='label label-warning'style='font-size: 14px;'> $: "+ datos[1]+"</span></td><td><span class='label label-info'style='font-size: 14px;'> $: "+ datos[0]+"</span></td></tr>")
+    
   });
+},
 
- },
+editar_prestamo:function(id){
+ console.log(id);
+ $.ajax({
+  url: '/prestamos/clientes/'+id,
+  type: 'get',
+  dataType: 'json'
+})
+ .done(function(d) {
+  console.log(d);
+  cliente_id = d[0].id_prestamo;
+  estado = d[0].estado;
 
- actualizar_prestamo:function(){
+  $("#nombres").val(d[0].nombre +" "+ d[0].primer_apellido);
+  $("#documento").val(d[0].documento);
+  $("#valor").val(d[0].valor_prestamo);
+  $("#interes").val(d[0].tasa_interes_id);
+  $("#interes_mensual").val(d[0].valor_interes_mensual);
+  $("#fecha_prestamo").val(d[0].fecha_prestamo);
+
+  $('#nombres').attr('readonly', 'true');
+  $('#documento').attr('readonly', 'true');
+  $("#md-editar").modal();
+});
+
+},
+
+actualizar_prestamo:function(){
 
   var datos = {
     id: cliente_id,
@@ -717,13 +740,26 @@ var prestamos = {
     data: datos
   })
   .done(function(resp) {
+
     if (resp.mensaje == 1) {
-      console.log(resp);
+      
+      new PNotify({
+        title: "Actualización Prestamo",
+        text: "No se puede actualizar el prestamo ya que tiene abonos asociados.",
+        type: "danger"
+      });  
+
+      $("#md-editar").modal("toggle");
+      
+    }
+
+    if (resp.mensaje == 2) {
+
       new PNotify({
         title: "Actualización prestamo",
         text: "Prestamo actualizado con exito",
         type: "success"
-      });   
+      });
       $("#md-editar").modal("toggle");
       prestamos.consultar_prestamo();
       $('#valor').val("");
@@ -736,13 +772,16 @@ var prestamos = {
       $("#valor-interes").val("");
       $("#nombres").val("");
       $("#documento").val("");
+      $("#md-editar").modal("toggle");
     }
-    if (resp.mensaje == 2) {
+
+      if (resp.mensaje == 3) {
+      
       console.log(resp);
       new PNotify({
         title: "Actualización prestamo",
-        text: "Prestamo actualizado con exito",
-        type: "success"
+        text: "Ha ocurrido un error al actualizar el Prestamo.",
+        type: "info"
       });
       $("#md-editar").modal("toggle");
       prestamos.consultar_prestamo();

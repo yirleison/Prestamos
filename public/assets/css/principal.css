@@ -74,17 +74,17 @@
 
 .tabla-prestamos thead > tr > th {
   color: #fff;
-background-color: #253c5a;
-border-bottom-color: #5c90d2
+  background-color: #253c5a;
+  border-bottom-color: #5c90d2
 }
 
 #tbl-prestamo-abierto {
   display: none;
 }
 .modal-global {
-    border-radius: 5px;
-    width: 100%;
-    padding: 0;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0;
 }
 
 .modal-global h4 {
@@ -112,11 +112,53 @@ border-bottom-color: #5c90d2
 
 .tbl_usuario thead > tr > th {
   color: #fff;
-background-color: #253c5a;
-border-bottom-color: #5c90d2
+  background-color: #253c5a;
+  border-bottom-color: #5c90d2
 }
 
 .acc_usuario {
   width: 20%;
   text-align: center;
 }
+
+.des {
+  display: none;
+}
+
+.alert-danger {
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+
+}
+
+#edit_Prestamo {
+  margin-left: 50%;
+}
+
+.centrar_modal {
+  margin: 0 auto; 
+  margin-top: 35px;
+}
+
+.centr_mod_prox_cuota {
+  margin: 0 auto; 
+  margin-top: 15%;
+}
+
+.letra_x {
+      color: #fff !important;
+}
+
+#d {
+     color: #fff !important;
+     
+}
+
+#d:hover {
+     color: #fff !important;
+
+}
+

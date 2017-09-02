@@ -21,7 +21,7 @@
             <div class="modal-content modal-global">
               <div class="block-header bg-primary-dark">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user" aria-hidden="true"></i> Registro Cliente</h4>
+                <h4 class="modal-title" id="md_crearCliente"><i class="fa fa-user" aria-hidden="true"></i> Registro Cliente</h4>
               </div>
               <div class="modal-body">
                 {!! Form::open(['id'=>'form_cliente']) !!}
@@ -44,7 +44,7 @@
                 <div class="row">
                   <div class="col-md-6"  style="padding-bottom: 10px">
                     {!!Form::label('Tipo documento')!!}
-                    {!!form::select('id',$document,'Seleccione',['class'=>'form-control','id'=>'tipo_documento','placeholder'=>'Seleccione'])!!}
+                    {!!form::select('id_tipo_documento',$document,null,['class'=>'form-control','id'=>'tipo_documento','placeholder'=>'Seleccione'])!!}
                   </div>
                   <div class="col-md-6">
                     {!!form::label('Documento')!!}
@@ -74,21 +74,21 @@
               <div class="row">
                 <div class="col-md-6" style="padding-bottom: 10px">
                   {!!Form::label('Tipo cuenta')!!}
-                  {!!form::select('id',$cuenta,null,['class'=>'form-control','id'=>'tipo_cuenta','placeholder'=>'Seleccione'])!!}
+                  {!!form::select('id_tipo_cuenta',$cuenta,null,['class'=>'form-control','id'=>'tipo_cuenta','placeholder'=>'Seleccione'])!!}
                 </div>
                 <div class="col-md-6" style="padding-bottom: 10px">
                   {!!form::label('Cuenta')!!}
                   {!!form::text('cuenta',null,['class'=>'form-control','id'=>'cuenta','placeholder'=>'Numero cuenta'])!!}
                 </div>
               </div>
-              {!! Form::close() !!}
             </div>
             <div id="area-example"></div>
             <div class="modal-footer">
-              {!!Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
+               <input type="submit" id="btn-registrar"  class="btn btn-primary" value="Registrar"/>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
+            {!! Form::close() !!}
         </div>
       </div>
     </div>
@@ -133,7 +133,7 @@
               <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user" aria-hidden="true"></i> Información Cliente</h4>
             </div>
             <div class="modal-body">
-                  {!! Form::open(['id'=>'form-actualizar-cliente']) !!}
+                  {!! Form::open(['id'=>'form_actualizar_cliente']) !!}
               <div class="row">
                 <div class="col-md-6"  style="padding-bottom: 10px">
                   {!!form::label('Nombre')!!}
@@ -151,7 +151,7 @@
                 </div>
                 <div class="col-md-6"  style="padding-bottom: 10px">
                   {!!Form::label('Tipo documento')!!}
-                  {!!form::select('id',$document,'Seleccione',['class'=>'form-control','id'=>'tipo_documento_editar','placeholder'=>'Seleccione'])!!}
+                  {!!form::select('id_tipo_documento_editar',$document,'Seleccione',['class'=>'form-control','id'=>'tipo_documento_editar','placeholder'=>'Seleccione'])!!}
                 </div>
               </div>
               <div class="row">
@@ -181,7 +181,7 @@
                 </div>
                 <div class="col-md-6" style="padding-bottom: 10px">
                   {!!Form::label('Tipo cuenta')!!}
-                  {!!form::select('id',$cuenta,null,['class'=>'form-control','id'=>'tipo_cuenta_editar','placeholder'=>'Seleccione'])!!}
+                  {!!form::select('id_tipo_cuenta',$cuenta,null,['class'=>'form-control','id'=>'tipo_cuenta_editar','placeholder'=>'Seleccione'])!!}
                 </div>
               </div>
               <div class="row">
@@ -194,13 +194,13 @@
                   {!!form::select('esatdo',['0'=>'Inactivo','1'=>'Activo'],null,['class'=>'form-control','id'=>'estado_editar'])!!}
                 </div>
               </div>
-              {!! Form::close() !!}
             </div>
             <div id="area-example"></div>
             <div class="modal-footer">
-              {!!Form::button('Actualizar',['class'=>'btn btn-primary','onclick'=>'cliente.actualizar_datos()'])!!}
+              {!!Form::submit('Actualizar',['class'=>'btn btn-primary'])!!}
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
+            {!! Form::close() !!}
           </div>
         </div>
       </div>
@@ -213,6 +213,7 @@
   <script>
   cliente.tabla_clientes();
   validarCliente.cliente();
+  validarCliente.editar_cliente();
   </script>
 
 @endsection

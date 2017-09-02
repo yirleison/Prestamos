@@ -12,11 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('auth.login');
 });
 
 Auth::routes();
 
+Route::group(['middleware' => 'auth'], function () {
 // Rutas para la vista usuarios...
 Route::resource('usuarios','UsuarioController');
 Route::get('usuarios/tabla/usuarios','UsuarioController@tabla_usuarios');
@@ -90,9 +91,35 @@ Route::get('/detalle/abonos/{id}',[
   'uses'=>'abonoController@detalle_abonos'
 ]);
 
-Route::get('/editar/abono/{id}',[
-  'as'=>'/editar/abono',
-  'uses'=>'abonoController@editar_abono'
+
+Route::get('/cartera/prestamos/{id}','prestamosController@cartera_cliente');
+
+Route::get("/estado/prestamo/{id}","abonoController@estado_prestamo");
+
+
+Route::post('/consultar/cuota',[
+  'as'=>'/consultar/cuota',
+  'uses'=>'abonoController@consultar_proxima_cuota'
 ]);
+
 // Fin rutas  prestamos y asiganción de prestamos...
+
+// Ruta para estado cartera....
+
+Route::get('/estado/cartera',[
+  'as'=>'/cartera',
+  'uses'=>'carteraController@index'
+]);
+
 Route::get('/home', 'HomeController@index');
+
+});
+
+Route::get("/validar/email","UsuarioController@validar_email");
+
+// Ruta para notificaciones
+Route::post("/notificaciones","NotificacionesController@moraCLientes");
+Route::get("/consulta/cuotas","NotificacionesController@consultarCuotas");
+Route::post("/suamarmes","abonoController@sumarMes");
+
+

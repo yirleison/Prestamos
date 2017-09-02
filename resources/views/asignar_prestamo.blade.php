@@ -39,7 +39,7 @@
   <div class="col-md-10 col-sm-10 col-lg-10">
     <div class="modal fade" id="modal-prestamos-crear" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content col-md-10 col-md-offset-2 col-sm-10 col-lg-10 modal-global">
+        <div class="modal-content col-md-10 col-md-offset-2 col-sm-10 col-lg-10 modal-global centrar_modal">
           <div class="block-header bg-primary-dark">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             <h4 class="modal-title" id="myModalLabel"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>    Crear Prestamo</h4>
@@ -59,7 +59,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">   
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   {!!Form::label('Valor')!!}
@@ -114,7 +114,7 @@
   prestamos.tabla_prestamos_clientes();
 
   $('#sandbox-container').datepicker({
-    language: "es",
+      language: "es",
     format: 'yyyy-mm-dd'
   });
 </script>
